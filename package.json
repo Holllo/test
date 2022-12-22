@@ -1,0 +1,38 @@
+{
+  "name": "@holllo/test",
+  "description": "Tiny testing library designed to run anywhere.",
+  "license": "AGPL-3.0-or-later",
+  "version": "0.0.0",
+  "homepage": "https://git.bauke.xyz/Holllo/test",
+  "bugs": "https://github.com/Holllo/test/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/"
+  ],
+  "scripts": {
+    "build": "tsx esbuild.ts && tsc",
+    "dev": "vite",
+    "lint": "xo",
+    "test": "pnpm run build && tsx tests/index.ts && tsx tests/example.ts"
+  },
+  "devDependencies": {
+    "@bauke/eslint-config": "^0.1.2",
+    "@bauke/prettier-config": "^0.1.2",
+    "esbuild": "^0.16.10",
+    "tsx": "^3.12.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.2",
+    "xo": "^0.53.1"
+  },
+  "prettier": "@bauke/prettier-config",
+  "xo": {
+    "extends": "@bauke/eslint-config",
+    "prettier": true,
+    "space": true
+  }
+}
