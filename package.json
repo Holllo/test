@@ -2,7 +2,7 @@
   "name": "@holllo/test",
   "description": "Tiny testing library designed to run anywhere.",
   "license": "AGPL-3.0-or-later",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "homepage": "https://git.bauke.xyz/Holllo/test",
   "bugs": "https://github.com/Holllo/test/issues",
   "publishConfig": {
