@@ -17,7 +17,18 @@ export class Group {
   public results: Result[] = [];
   public tests: Test[] = [];
 
+  private _afterAll: (() => Promise<void>) | undefined;
+  private _beforeAll: (() => Promise<void>) | undefined;
+
   constructor(public name: string) {}
+
+  afterAll(fn: Group["_afterAll"]): void {
+    this._afterAll = fn;
+  }
+
+  beforeAll(fn: Group["_beforeAll"]): void {
+    this._beforeAll = fn;
+  }
 
   /** Create a new test case that doesn't get run. */
   skip(name: Test["name"], fn: Test["fn"]): void {
@@ -31,9 +42,17 @@ export class Group {
 
   /** Run all the tests from this group and display their results. */
   async run(): Promise<void> {
+    if (this._beforeAll !== undefined) {
+      await this._beforeAll();
+    }
+
     const results = await Promise.all(
       this.tests.map(async (test) => test.run(this.context)),
     );
+
+    if (this._afterAll !== undefined) {
+      await this._afterAll();
+    }
 
     console.log(
       `# %c${this.name}`,
