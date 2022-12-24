@@ -22,10 +22,12 @@ export class Group {
 
   constructor(public name: string) {}
 
+  /** Set a function to run after all tests have finished. */
   afterAll(fn: Group["_afterAll"]): void {
     this._afterAll = fn;
   }
 
+  /** Set a function to run before all tests begin. */
   beforeAll(fn: Group["_beforeAll"]): void {
     this._beforeAll = fn;
   }
