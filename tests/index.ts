@@ -35,6 +35,14 @@ void setup("add", async (group) => {
 });
 
 void setup("subtract", async (group) => {
+  group.beforeAll(async () => {
+    console.log("subtract beforeAll hook");
+  });
+
+  group.afterAll(async () => {
+    console.log("subtract afterAll hook");
+  });
+
   group.test("subtract(1, 1) = 0", async (test) => {
     test.equals(await subtract(1, 1), 0);
   });
