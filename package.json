@@ -4,7 +4,10 @@
   "license": "AGPL-3.0-or-later",
   "version": "0.1.0",
   "homepage": "https://git.bauke.xyz/Holllo/test",
-  "bugs": "https://github.com/Holllo/test/issues",
+  "bugs": {
+    "email": "helllo@holllo.org",
+    "url": "https://github.com/Holllo/test/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
