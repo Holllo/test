@@ -7,6 +7,11 @@ await setup("Assertions", async (group) => {
     test.equals("A string!", "A string!", "string");
   });
 
+  group.test("false", async (test) => {
+    test.false(1 < 0, "logic");
+    test.false(new Date() instanceof String, "instanceof");
+  });
+
   group.test("true", async (test) => {
     test.true(1 > 0, "logic");
     test.true(new Date() instanceof Date, "instanceof");

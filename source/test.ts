@@ -28,6 +28,16 @@ export class TestContext {
     );
   }
 
+  /** Assert that the value is false. */
+  false(actual: boolean, title?: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+    if (actual === false) {
+      return;
+    }
+
+    throw new AssertionError("Failed false assertion", actual, false, title);
+  }
+
   /** Assert that the value is true. */
   true(actual: boolean, title?: string): void {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
