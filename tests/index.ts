@@ -1,5 +1,7 @@
 import {setup} from "../source/index.js";
 
+await import("./assertions.js");
+
 async function add(a: number, b: number): Promise<number> {
   await new Promise<void>((resolve) => {
     setTimeout(() => {
