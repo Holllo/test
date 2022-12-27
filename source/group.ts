@@ -4,23 +4,32 @@ import {type Result, Test, TestContext} from "./test.js";
 export async function setup(
   name: string,
   fn: (group: Group) => Promise<void>,
+  options?: GroupOptions,
 ): Promise<Group> {
-  const group = new Group(name);
+  const group = new Group(name, options);
   await fn(group);
   await group.run();
   return group;
 }
 
+/** Options for test groups. */
+export type GroupOptions = {
+  parallel?: boolean;
+};
+
 /** A collection of tests. */
-export class Group {
+export class Group implements GroupOptions {
   public context: TestContext = new TestContext();
+  public parallel: boolean;
   public results: Result[] = [];
   public tests: Test[] = [];
 
   private _afterAll: (() => Promise<void>) | undefined;
   private _beforeAll: (() => Promise<void>) | undefined;
 
-  constructor(public name: string) {}
+  constructor(public name: string, options?: GroupOptions) {
+    this.parallel = options?.parallel ?? false;
+  }
 
   /** Set a function to run after all tests have finished. */
   afterAll(fn: Group["_afterAll"]): void {
@@ -48,9 +57,18 @@ export class Group {
       await this._beforeAll();
     }
 
-    const results = await Promise.all(
-      this.tests.map(async (test) => test.run(this.context)),
-    );
+    let results: Result[];
+    if (this.parallel) {
+      results = await Promise.all(
+        this.tests.map(async (test) => test.run(this.context)),
+      );
+    } else {
+      results = [];
+      for (const test of this.tests) {
+        // eslint-disable-next-line no-await-in-loop
+        results.push(await test.run(this.context));
+      }
+    }
 
     if (this._afterAll !== undefined) {
       await this._afterAll();

@@ -34,24 +34,30 @@ void setup("add", async (group) => {
   });
 });
 
-void setup("subtract", async (group) => {
-  group.beforeAll(async () => {
-    console.log("subtract beforeAll hook");
-  });
+void setup(
+  "subtract",
+  async (group) => {
+    group.beforeAll(async () => {
+      console.log("subtract beforeAll hook");
+    });
 
-  group.afterAll(async () => {
-    console.log("subtract afterAll hook");
-  });
+    group.afterAll(async () => {
+      console.log("subtract afterAll hook");
+    });
 
-  group.test("subtract(1, 1) = 0", async (test) => {
-    test.equals(await subtract(1, 1), 0);
-  });
+    group.test("subtract(1, 1) = 0", async (test) => {
+      test.equals(await subtract(1, 1), 0);
+    });
 
-  group.skip("subtract(1, 1) = 1", async (test) => {
-    test.equals(await subtract(1, 1), 1);
-  });
+    group.skip("subtract(1, 1) = 1", async (test) => {
+      test.equals(await subtract(1, 1), 1);
+    });
 
-  group.test("subtract(1, 1) = 2", async (test) => {
-    test.equals(await subtract(1, 1), 2, "extra title");
-  });
-});
+    group.test("subtract(1, 1) = 2", async (test) => {
+      test.equals(await subtract(1, 1), 2, "extra title");
+    });
+  },
+  {
+    parallel: false,
+  },
+);
