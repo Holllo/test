@@ -1,24 +1,31 @@
 export class AssertionError extends Error {
   public readonly actual: string;
   public readonly expected: string;
+  public readonly title: string | undefined;
 
-  constructor(message: string, actual: any, expected: any) {
+  constructor(message: string, actual: any, expected: any, title?: string) {
     super(message);
 
     this.actual = JSON.stringify(actual);
     this.expected = JSON.stringify(expected);
+    this.title = title;
   }
 }
 
 /** Test execution context with assertions. */
 export class TestContext {
   /** Assert strict equality with `===`. */
-  equals<T>(actual: T, expected: T): void {
+  equals<T>(actual: T, expected: T, title?: string): void {
     if (actual === expected) {
       return;
     }
 
-    throw new AssertionError("Failed equals assertion", actual, expected);
+    throw new AssertionError(
+      "Failed equals assertion",
+      actual,
+      expected,
+      title,
+    );
   }
 }
 
@@ -120,6 +127,7 @@ export class Result implements ResultData {
 
     if (this.error !== undefined) {
       message += `\n  %c${this.error.message}`;
+      message += this.error.title === undefined ? "" : `: ${this.error.title}`;
       message += `\n  |   Actual: ${this.error.actual}`;
       message += `\n  | Expected: ${this.error.expected}`;
       styles.push("color: pink;");

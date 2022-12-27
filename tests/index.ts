@@ -52,6 +52,6 @@ void setup("subtract", async (group) => {
   });
 
   group.test("subtract(1, 1) = 2", async (test) => {
-    test.equals(await subtract(1, 1), 2);
+    test.equals(await subtract(1, 1), 2, "extra title");
   });
 });
